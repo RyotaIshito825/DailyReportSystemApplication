@@ -113,4 +113,29 @@ public class EmployeeController {
         return "redirect:/employees";
     }
 
+    // 従業員更新処理画面
+    @GetMapping(value = "/{code}/update")
+    public String edit(@PathVariable String code, Model model) {
+
+        model.addAttribute("employee", employeeService.findByCode(code));
+        return "employees/edit";
+    }
+
+    // 従業員更新処理
+    @PostMapping(value = "/{code}/update")
+    public String update(@Validated Employee employee, BindingResult res, Model model) {
+        if (res.hasErrors()) {
+            model.addAttribute("employee", employee);
+            return "employees/edit";
+        }
+
+        ErrorKinds result = employeeService.updateEmployee(employee);
+
+        if (ErrorMessage.contains(result)) {
+            model.addAttribute(ErrorMessage.getErrorName(result), ErrorMessage.getErrorValue(result));
+            return "employees/edit";
+        }
+
+        return "redirect:/employees";
+    }
 }
