@@ -7,7 +7,7 @@
             <a class="text-light" th:href="@{/employees}">従業員</a>
         </li>
         <li>
-            <a class="text-light">日報</a>
+            <a th:href="@{/reports}" class="text-light">日報</a>
         </li>
     </ul>
     <form method="post" th:action="@{/logout}">
