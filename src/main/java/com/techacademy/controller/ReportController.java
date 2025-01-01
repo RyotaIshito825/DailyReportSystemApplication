@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -69,7 +70,42 @@ public class ReportController {
         return "redirect:/reports";
     }
 
+    // 日報詳細画面
+    @GetMapping(value = "/{id}/")
+    public String detail(@PathVariable Integer id, Model model) {
+        model.addAttribute("report", reportService.findById(id));
+        return "reports/detail";
+    }
 
+    // 日報更新画面
+    @GetMapping(value = "/{id}/update")
+    public String edit(@PathVariable Integer id, Model model) {
+
+        Employee employee = employeeService.findByCode(reportService.findById(id).getEmployee().getCode());
+        Report report = reportService.findById(id);
+        report.setEmployee(employee);
+        model.addAttribute("report", reportService.findById(id));
+        return "reports/edit";
+    }
+
+    // 日報更新処理
+    @PostMapping(value = "/{id}/update")
+    public String update(@Validated Report report, BindingResult res, Model model) {
+        Employee employee = employeeService.findByCode(reportService.findById(report.getId()).getEmployee().getCode());
+        report.setEmployee(employee);
+        if (res.hasErrors()) {
+            model.addAttribute("report", report);
+            return "reports/edit";
+        }
+
+        ErrorKinds result = reportService.updateReport(employee, report);
+
+        if (ErrorMessage.contains(result)) {
+            model.addAttribute(ErrorMessage.getErrorName(result), ErrorMessage.getErrorValue(result));
+            return "reports/edit";
+        }
+        return "redirect:/reports";
+    }
 
 
 }

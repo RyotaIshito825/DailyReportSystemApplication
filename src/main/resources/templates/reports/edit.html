@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/header :: head_fragment(title=日報更新)"></head>
+
+<body class="h-100 overflow-hidden">
+    <div class="row h-100">
+        <div class="h-100 p-3 mb-2 bg-dark text-white col-sm-2">
+            <nav th:replace="common/side :: copy"></nav>
+        </div>
+
+        <div class="mt-3 h-100 col-sm-10">
+            <!-- コンテンツ -->
+            <div class="container-fluid p-0">
+                <h1 class="h3 mb-3">日報 更新</h1>
+            </div>
+            <div class="col-12 col-xxl-6">
+
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:action="@{/reports/{id}/update(id=${report.id})}" th:object="${report}" th:method="post">
+                                <div class="wizard wizard-success mb-4">
+                                    <div class="mb-3 pt-2">
+                                      <label for="date">日付</label>
+                                      <p th:if="${reportDateError} neq null" th:text="${reportDateError}" class="text-danger pt-2"></p>
+                                      <p th:errors="*{reportDate}" class="mb-1 pt-1 text-danger"></p>
+                                      <div class="col-md-7">
+                                          <input class="form-control w-50" type="date" id="date" th:field="*{reportDate}" th:errorclass="err">
+                                      </div>
+                                    </div>
+                                    <div class="mb-3 pt-3">
+                                        <label class="form-label" for="report-employee-name">氏名</label>
+                                        <p class="mb-1"></p>
+                                        <div class="col-md-7">
+                                            <div class="" th:text="*{employee.name}" th:value="*{employee.name}" id="report-employee-name">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 pt-4">
+                                        <label class="form-label" for="title">タイトル</label>
+                                        <p th:errors="*{title}" class="mb-1 text-danger"></p>
+                                        <div class="col-md-7">
+                                            <input class="form-control w-100" type="text" id="title" th:field="*{title}" th:errorclass="err">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 pt-3">
+                                        <label class="form-label" for="content">内容</label>
+                                        <p th:errors="*{content}" class="mb-1 text-danger"></p>
+                                        <div class="col-md-7" style="width: 90%;">
+                                            <textarea class="form-control" rows="10" style="width: 100%;" id="content" th:field="*{content}"  th:errorclass="err"></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <p class="mt-5">
+                                    <input type="submit" value="更新" class="btn btn-primary">
+                                    <a th:href="@{/reports}" class="btn btn-primary">戻る</a>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
