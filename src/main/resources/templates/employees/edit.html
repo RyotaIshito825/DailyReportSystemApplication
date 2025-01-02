@@ -15,7 +15,7 @@
                 <h1 class="h3 mb-3">従業員 更新</h1>
             </div>
 
-            <div class="mb-3 col-12 col-xxl-6">
+            <div class="mb-3 col-12 col-xxl-10">
 
                 <div class="col-xl-12">
 
@@ -29,17 +29,17 @@
                             <div class="mb-3">
                               <label class="form-label pt-1 px-3">氏名</label>
                               <p th:errors="*{name}" class="text-danger ps-3"></p>
-                              <input type="text" class="form-control w-75 mt-1 mx-3" id="" th:field="*{name}" th:errorclass="err">
+                              <input type="text" class="form-control w-50 mt-1 mx-3" id="" th:field="*{name}" th:errorclass="err">
                             </div>
                             <div class="mb-3">
                               <label for="exampleInputPassword1" class="form-label pt-3 px-3">パスワード</label>
                               <p th:if="${passwordError} neq null" th:text="${passwordError}" class="text-danger ps-3"></p>
-                              <input type="password" class="form-control w-75 mt-1 mx-3" id="exampleInputPassword1"
+                              <input type="password" class="form-control w-50 mt-1 mx-3" id="exampleInputPassword1"
                               th:field="*{password}" th:errorclass="err">
                             </div>
                             <div class="mb-3">
                               <label for="exampleInputPassword1" class="form-label pt-3 px-3">権限</label>
-                              <select class="form-select w-50 mt-1 mx-3" th:field="*{role}">
+                              <select class="form-select w-25 mt-1 mx-3" th:field="*{role}">
                                 <option
                                   th:each="item:${T(com.techacademy.entity.Employee.Role).values()}"
                                   th:value="${item}"

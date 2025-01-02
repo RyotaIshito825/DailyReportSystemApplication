@@ -58,8 +58,10 @@ public class ReportService {
     public ErrorKinds updateReport(Employee employee, Report report) {
         Report rep = findById(report.getId());
         ErrorKinds result = isReportDateCheck(employee, report);
-        if (ErrorKinds.CHECK_OK != result) {
-            return result;
+
+        // 表示中の日報データの日付はOK
+        if (report.getReportDate().equals(rep.getReportDate())) {
+            result = ErrorKinds.CHECK_OK;
         }
 
         LocalDateTime now = LocalDateTime.now();
@@ -70,7 +72,12 @@ public class ReportService {
         report.setUpdatedAt(now);
 
         reportRepository.save(report);
-        return ErrorKinds.SUCCESS;
+
+        if (ErrorKinds.CHECK_OK != result) {
+            return result;
+        } else {
+            return ErrorKinds.SUCCESS;
+        }
     }
 
     // 日報日付チェック（新規登録時）
@@ -87,7 +94,6 @@ public class ReportService {
         return isExist;
     }
 
-
     // 日報日付チェック（更新時）
     public ErrorKinds isReportDateCheck(Employee employee, Report report) {
         List<Report> reports = reportRepository.findByReportDate(report.getReportDate());
@@ -101,7 +107,11 @@ public class ReportService {
     // 日付チェック（更新時）
     public boolean isRegisteredDateCheck(Employee employee, Report report) {
         List<Report> reports = reportRepository.findByReportDate(report.getReportDate());
-        boolean isExistReportDates = reports.stream().anyMatch(r -> r.getReportDate().equals(report.getReportDate()));
+
+        boolean isExistReportDates = reports.stream()
+                .filter(r -> !r.equals(report))
+                .anyMatch(r -> r.getReportDate().equals(report.getReportDate()));
+
         return isExistReportDates;
     }
     // レポートに画面で表示中の従業員のものが含まれているかチェック

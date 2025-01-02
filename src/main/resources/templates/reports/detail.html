@@ -14,7 +14,7 @@
                 <h1 class="h3 mb-3">日報 詳細</h1>
             </div>
 
-            <div class="mb-3 col-12 col-xxl-6">
+            <div class="mb-3 col-12 col-xxl-8">
 
                 <div class="col-xl-12">
                     <div class="card" th:object="${report}">
@@ -37,7 +37,9 @@
                                     </tr>
                                     <tr>
                                         <th>内容</th>
-                                        <td class="align-middle" th:text="*{content}"></td>
+                                        <td class="align-middle">
+                                            <pre th:text="*{content}" style="font-family: inherit; font-size: inherit; margin: inherit;"></pre>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>登録日時</th>

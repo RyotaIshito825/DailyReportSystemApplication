@@ -14,7 +14,7 @@
             <div class="container-fluid p-0">
                 <h1 class="h3 mb-3">日報 更新</h1>
             </div>
-            <div class="col-12 col-xxl-6">
+            <div class="col-12 col-xxl-10">
 
                 <div class="col-xl-12">
                     <div class="card">
@@ -26,7 +26,7 @@
                                       <p th:if="${reportDateError} neq null" th:text="${reportDateError}" class="text-danger pt-2"></p>
                                       <p th:errors="*{reportDate}" class="mb-1 pt-1 text-danger"></p>
                                       <div class="col-md-7">
-                                          <input class="form-control w-50" type="date" id="date" th:field="*{reportDate}" th:errorclass="err">
+                                          <input class="form-control" style="width: 30%;" type="date" id="date" th:field="*{reportDate}" th:errorclass="err">
                                       </div>
                                     </div>
                                     <div class="mb-3 pt-3">
@@ -40,13 +40,13 @@
                                         <label class="form-label" for="title">タイトル</label>
                                         <p th:errors="*{title}" class="mb-1 text-danger"></p>
                                         <div class="col-md-7">
-                                            <input class="form-control w-100" type="text" id="title" th:field="*{title}" th:errorclass="err">
+                                            <input class="form-control" style="width: 65%;" type="text" id="title" th:field="*{title}" th:errorclass="err">
                                         </div>
                                     </div>
                                     <div class="mb-3 pt-3">
                                         <label class="form-label" for="content">内容</label>
                                         <p th:errors="*{content}" class="mb-1 text-danger"></p>
-                                        <div class="col-md-7" style="width: 90%;">
+                                        <div class="col-md-7" style="width: 60%;">
                                             <textarea class="form-control" rows="10" style="width: 100%;" id="content" th:field="*{content}"  th:errorclass="err"></textarea>
                                         </div>
                                     </div>
