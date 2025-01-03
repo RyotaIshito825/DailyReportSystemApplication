@@ -27,6 +27,11 @@ public class ReportService {
         return reportRepository.findAll();
     }
 
+    // 削除対象の従業員に紐づいている日報リスト取得
+    public List<Report> findByEmployee(Employee employee) {
+        return reportRepository.findByEmployee(employee);
+    }
+
     // 日報1件を検索
     public Report findById(Integer id) {
         Optional<Report> option = reportRepository.findById(id);
@@ -55,6 +60,7 @@ public class ReportService {
     }
 
     // 日報更新
+    @Transactional
     public ErrorKinds updateReport(Employee employee, Report report) {
         Report rep = findById(report.getId());
         ErrorKinds result = isReportDateCheck(employee, report);
@@ -118,5 +124,16 @@ public class ReportService {
     public boolean isDisplayingEmployeeCheck(Employee employee, List<Report> reports) {
         boolean isExist = reports.stream().anyMatch(r -> r.getEmployee().getCode().equals(employee.getCode()));
         return isExist;
+    }
+
+    // 日報削除
+    @Transactional
+    public ErrorKinds delete(Integer id) {
+        Report report = findById(id);
+        LocalDateTime now = LocalDateTime.now();
+        report.setUpdatedAt(now);
+        report.setDeleteFlg(true);
+
+        return ErrorKinds.SUCCESS;
     }
 }

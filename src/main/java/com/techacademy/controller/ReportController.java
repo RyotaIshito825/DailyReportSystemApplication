@@ -107,4 +107,15 @@ public class ReportController {
         return "redirect:/reports";
     }
 
+    // 日報削除処理
+    @PostMapping(value = "/{id}/delete")
+    public String delete(@PathVariable Integer id, Model model) {
+        ErrorKinds result = reportService.delete(id);
+        if (ErrorMessage.contains(result)) {
+            model.addAttribute("report", reportService.findById(id));
+            return "reports/detail";
+        }
+        return "redirect:/reports";
+    }
+
 }
