@@ -69,7 +69,6 @@ public class ReportService {
         if (report.getReportDate().equals(rep.getReportDate())) {
             result = ErrorKinds.CHECK_OK;
         }
-
         if (ErrorKinds.CHECK_OK != result) {
             return result;
         } else {
