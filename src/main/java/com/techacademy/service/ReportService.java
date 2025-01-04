@@ -70,18 +70,16 @@ public class ReportService {
             result = ErrorKinds.CHECK_OK;
         }
 
-        LocalDateTime now = LocalDateTime.now();
-        report.setTitle(report.getTitle());
-        report.setContent(report.getContent());
-        report.setReportDate(report.getReportDate());
-        report.setCreatedAt(rep.getCreatedAt());
-        report.setUpdatedAt(now);
-
-        reportRepository.save(report);
-
         if (ErrorKinds.CHECK_OK != result) {
             return result;
         } else {
+            LocalDateTime now = LocalDateTime.now();
+            report.setTitle(report.getTitle());
+            report.setContent(report.getContent());
+            report.setReportDate(report.getReportDate());
+            report.setCreatedAt(rep.getCreatedAt());
+            report.setUpdatedAt(now);
+            reportRepository.save(report);
             return ErrorKinds.SUCCESS;
         }
     }
