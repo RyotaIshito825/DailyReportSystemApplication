@@ -93,7 +93,6 @@ public class EmployeeService {
         employee.setUpdatedAt(now);
         employee.setDeleteFlg(true);
 
-
         List<Report> reports = reportService.findByEmployee(employee);
         for (Report r : reports) {
             reportService.delete(r.getId());

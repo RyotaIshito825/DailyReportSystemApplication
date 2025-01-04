@@ -34,9 +34,18 @@ public class ReportController {
     }
 
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("listSize", reportService.findAll().size());
-        model.addAttribute("reportList", reportService.findAll());
+    public String list(@AuthenticationPrincipal UserDetail userDetail, Model model) {
+
+        Employee employee = employeeService.findByCode(userDetail.getEmployee().getCode());
+        // ログイン中の従業員の権限で分岐
+        if (employee.getRole() == Employee.Role.ADMIN) {
+            model.addAttribute("listSize", reportService.findAll().size());
+            model.addAttribute("reportList", reportService.findAll());
+        } else {
+            model.addAttribute("listSize", reportService.findByEmployee(employee).size());
+            model.addAttribute("reportList", reportService.findByEmployee(employee));
+        }
+
         return "reports/list";
     }
 
@@ -117,5 +126,4 @@ public class ReportController {
         }
         return "redirect:/reports";
     }
-
 }
