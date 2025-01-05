@@ -1,4 +1,4 @@
-package com.techacademy; // ご自身の環境に合わせてください
+package com.techacademy.controller;
 
 import org.apache.catalina.connector.Connector;
 import org.apache.coyote.ajp.AjpNio2Protocol;
@@ -23,7 +23,7 @@ public class TomcatConfiguration implements WebServerFactoryCustomizer<TomcatSer
         connector.setPort(8009);
 
         // secretという保護機能を利用しないようにする設定
-        AjpNio2Protocol protocol = (AjpNio2Protocol) connector.getProtocolHandler();
+        AjpNio2Protocol protocol = (AjpNio2Protocol)connector.getProtocolHandler();
         protocol.setSecretRequired(false);
 
         return connector;
