@@ -12,6 +12,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -40,16 +42,19 @@ public class Employee {
 
     // ID
     @Id
-    @Column(length = 10)
-    @NotEmpty
-    @Length(max = 10)
-    private String code;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer code;
 
     // 名前
     @Column(length = 20, nullable = false)
     @NotEmpty
     @Length(max = 20)
     private String name;
+
+    // メールアドレス
+    @NotEmpty
+    @Column(length = 255, nullable = false)
+    private String email;
 
     // 権限
     @Column(columnDefinition="VARCHAR(10)", nullable = false)

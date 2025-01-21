@@ -49,7 +49,7 @@ class EmployeeServiceTest {
     void testFindByCode() {
 
         // 取得できた場合
-        Employee employee = service.findByCode("1");
+        Employee employee = service.findByCode(1);
         assertEquals(employee.getCode(), "1");
         assertEquals(employee.getName(), "煌木　太郎");
         assertEquals(employee.getRole(), Role.ADMIN);
@@ -57,7 +57,7 @@ class EmployeeServiceTest {
         // 登録日付、更新日付はミリ秒単位での結果比較となるためテストでの確認不可
 
         // 取得できなかった場合
-        Employee employeeNull = service.findByCode("100");
+        Employee employeeNull = service.findByCode(100);
         assertEquals(employeeNull, null);
 
     }

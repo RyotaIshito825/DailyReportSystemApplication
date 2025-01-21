@@ -122,7 +122,7 @@ class EmployeeControllerTest {
     void testAddSuccess() throws Exception {
 
         Employee employee = new Employee();
-        employee.setCode("3");
+        employee.setCode(3);
         employee.setName("テスト太郎");
         LocalDateTime now = LocalDateTime.now();
         employee.setCreatedAt(now);
@@ -144,7 +144,7 @@ class EmployeeControllerTest {
     void testAddError1() throws Exception {
 
         Employee employee = new Employee();
-        employee.setCode("3");
+        employee.setCode(3);
         employee.setName("");
         LocalDateTime now = LocalDateTime.now();
         employee.setCreatedAt(now);
@@ -166,7 +166,7 @@ class EmployeeControllerTest {
     void testAddError2() throws Exception {
 
         Employee employee = new Employee();
-        employee.setCode("3");
+        employee.setCode(3);
         employee.setName("テスト太郎");
         LocalDateTime now = LocalDateTime.now();
         employee.setCreatedAt(now);
@@ -188,7 +188,7 @@ class EmployeeControllerTest {
     void testAddError3() throws Exception {
 
         Employee employee = new Employee();
-        employee.setCode("1");
+        employee.setCode(1);
         employee.setName("テスト太郎");
         LocalDateTime now = LocalDateTime.now();
         employee.setCreatedAt(now);
@@ -210,7 +210,7 @@ class EmployeeControllerTest {
     void testAddError4() throws Exception {
 
         Employee employee = new Employee();
-        employee.setCode("11111111111");
+        employee.setCode(111111);
         employee.setName("テスト三郎");
         LocalDateTime now = LocalDateTime.now();
         employee.setCreatedAt(now);
@@ -232,7 +232,7 @@ class EmployeeControllerTest {
     void testAddError5() throws Exception {
 
         Employee employee = new Employee();
-        employee.setCode("3");
+        employee.setCode(3);
         employee.setName("テスト三郎");
         LocalDateTime now = LocalDateTime.now();
         employee.setCreatedAt(now);
@@ -254,7 +254,7 @@ class EmployeeControllerTest {
     void testAddError6() throws Exception {
 
         Employee employee = new Employee();
-        employee.setCode("1");
+        employee.setCode(1);
         employee.setName("テスト太郎");
         LocalDateTime now = LocalDateTime.now();
         employee.setCreatedAt(now);
@@ -278,7 +278,7 @@ class EmployeeControllerTest {
     void testDeleteSuccess1() throws Exception {
 
         Employee employee = new Employee();
-        employee.setCode("1");
+        employee.setCode(1);
         employee.setName("煌木　太郎");
         LocalDateTime now = LocalDateTime.now();
         employee.setCreatedAt(now);
@@ -303,7 +303,7 @@ class EmployeeControllerTest {
     void testDeleteSuccess2() throws Exception {
 
         Employee employee = new Employee();
-        employee.setCode("1");
+        employee.setCode(1);
         employee.setName("煌木　太郎");
         LocalDateTime now = LocalDateTime.now();
         employee.setCreatedAt(now);
@@ -327,7 +327,7 @@ class EmployeeControllerTest {
     void testDeleteError1() throws Exception {
 
         Employee employee = new Employee();
-        employee.setCode("1");
+        employee.setCode(1);
         employee.setName("煌木　太郎");
         LocalDateTime now = LocalDateTime.now();
         employee.setCreatedAt(now);

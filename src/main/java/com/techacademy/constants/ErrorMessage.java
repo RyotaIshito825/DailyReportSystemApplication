@@ -25,13 +25,22 @@ public class ErrorMessage {
             // 従業員番号重複チェック用エラーメッセージ
             put(ErrorKinds.DUPLICATE_EXCEPTION_ERROR,
                     new ArrayList<String>(Arrays.asList("codeError", "既に登録されている社員番号です")));
+            // メールアドレス空白チェック用エラーメッセージ
+            put(ErrorKinds.EMAIL_BLANK_ERROR,
+                    new ArrayList<String>(Arrays.asList("emailError", "メールアドレスを入力してください")));
             // 従業員番号重複チェック(例外)用エラーメッセージ
-            put(ErrorKinds.DUPLICATE_ERROR, new ArrayList<String>(Arrays.asList("codeError", "既に登録されている社員番号です")));
+//            put(ErrorKinds.DUPLICATE_ERROR, new ArrayList<String>(Arrays.asList("codeError", "既に登録されている社員番号です")));
+            // 従業員メール重複チェック(例外)エラーメッセージ
+            put(ErrorKinds.DUPLICATE_ERROR, new ArrayList<String>(Arrays.asList("emailError", "既に登録されているメールアドレスです")));
             // ログイン中の従業員削除チェック用エラーメッセージ
             put(ErrorKinds.LOGINCHECK_ERROR,
                     new ArrayList<String>(Arrays.asList("deleteError", "ログイン中の従業員を削除することは出来ません")));
             // 同一日付チェック用エラーメッセージ
             put(ErrorKinds.DATECHECK_ERROR, new ArrayList<String>(Arrays.asList("reportDateError", "既に登録されている日付です")));
+            // プロフィール画像のファイルサイズ1MB以下チェック用エラーメッセージ
+            put(ErrorKinds.FILESIZE_ERROR, new ArrayList<String>(Arrays.asList("fileError", "ファイルサイズが大きすぎます。最大1MBです。")));
+            // プロフィール画像のファイルタイプが"image/*"チェック用エラーメッセージ
+            put(ErrorKinds.FILETYPE_ERROR, new ArrayList<String>(Arrays.asList("fileError", "画像ファイルをアップロードしてください。")));
         }
     };
 

@@ -6,6 +6,8 @@ public enum ErrorKinds {
     // エラー内容
     // 空白チェックエラー
     BLANK_ERROR,
+    // メール空白チェックエラー
+    EMAIL_BLANK_ERROR,
     // 半角英数字チェックエラー
     HALFSIZE_ERROR,
     // 桁数(8桁~16桁以外)チェックエラー
@@ -18,6 +20,10 @@ public enum ErrorKinds {
     LOGINCHECK_ERROR,
     // 日付チェックエラー
     DATECHECK_ERROR,
+    // ファイルサイズエラー
+    FILESIZE_ERROR,
+    // ファイルタイプエラー
+    FILETYPE_ERROR,
     // チェックOK
     CHECK_OK,
     // 正常終了

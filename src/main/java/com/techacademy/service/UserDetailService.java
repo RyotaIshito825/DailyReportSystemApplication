@@ -20,7 +20,7 @@ public class UserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Employee> employee = employeeRepository.findById(username);
+        Optional<Employee> employee = employeeRepository.findById(Integer.parseInt(username));
 
         if (employee.isEmpty()) {
             throw new UsernameNotFoundException("Exception:Username Not Found");

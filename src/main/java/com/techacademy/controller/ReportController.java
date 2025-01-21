@@ -52,7 +52,7 @@ public class ReportController {
     //日報新規登録画面
     @GetMapping(value = "/add")
     public String create(@AuthenticationPrincipal UserDetail userDetail, @ModelAttribute Report report, Model model) {
-        Employee employee = employeeService.findByCode(userDetail.getUsername());
+        Employee employee = employeeService.findByCode(Integer.parseInt(userDetail.getUsername()));
         report.setEmployee(employee);
         model.addAttribute("report", report);
         return "reports/new";
@@ -61,7 +61,7 @@ public class ReportController {
     // 日報新規登録処理
     @PostMapping(value = "/add")
     public String add(@AuthenticationPrincipal UserDetail userDetail, @Validated Report report, BindingResult res, Model model) {
-        Employee employee = employeeService.findByCode(userDetail.getUsername());
+        Employee employee = employeeService.findByCode(Integer.parseInt(userDetail.getUsername()));
         report.setEmployee(employee);
 
         if (res.hasErrors()) {

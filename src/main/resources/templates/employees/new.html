@@ -19,16 +19,18 @@
                 <div class="col-xl-8">
                     <div class="card">
                         <div class="card-body">
-                            <form th:action="@{/employees/add}" th:object="${employee}" th:method="post">
+                            <form th:action="@{/employees/add}" th:object="${employee}" th:method="post" enctype="multipart/form-data">
                                 <div class="wizard wizard-success mb-4">
                                     <div class="mb-3">
-                                        <label class="form-label" for="code">社員番号</label>
-                                        <p class="mb-1"></p>
-                                        <div class="col-md-7">
-                                            <input class="form-control" type="text" th:field="*{code}" th:errorclass="err" id="code">
-                                            <span th:errors="*{code}" class="text-danger"></span>
-                                            <span th:if="${codeError} neq null" th:text="${codeError}" class="text-danger"></span>
-                                        </div>
+                                       <label class="form-label" for="code">プロフィール画像</label>
+                                       <p class="mb-1"></p>
+                                       <div class="col-md-7">
+                                           <div class="" style="line-height: 55px;">
+                                               <img th:src="@{../../img/profile-noimage.png}" id="profileImage" style="width: 50px; height: 50px; border-radius: 100px; border: 1px solid gray;">
+                                               <input type="file" name="file" style="display: none;" onchange="previewFile(this);" id="profileImageInput" accept="image/*">
+                                               <p th:if="${fileError} neq null" th:text="${fileError}" class="text-danger"></p>
+                                           </div>
+                                       </div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="name">氏名</label>
@@ -36,6 +38,14 @@
                                         <div class="col-md-7">
                                             <input class="form-control" type="text" th:field="*{name}" th:errorclass="err" id="name">
                                             <span th:errors="*{name}" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="email">メールアドレス</label>
+                                        <p class="mb-1"></p>
+                                        <div class="col-md-7">
+                                            <input class="form-control" type="email" id="email" th:field="*{email}" th:errorclass="err">
+                                            <span th:if="${emailError} neq null" th:text="${emailError}" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="mb-3">
@@ -67,6 +77,18 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function previewFile(f) {
+            let fileData = new FileReader();
+            fileData.onload = (function() {
+                document.getElementById("profileImage").src = fileData.result;
+            });
+            fileData.readAsDataURL(f.files[0]);
+        }
+    </script>
+
+    <script type="text/javascript" th:src="@{/js/app.js}"></script>
 </body>
 
 </html>

@@ -28,8 +28,18 @@
                                         <td class="align-middle" th:text="${employee.code}"></td>
                                     </tr>
                                     <tr>
+                                        <th class="w-25">プロフィール画像</th>
+                                        <td class="align-middle" style="line-height: 55px;">
+                                            <img th:if="${profileImage} != null" th:src="${profileImage}" style="width: 50px; height: 50px; border-radius: 100px; border: 1px solid gray;">
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th>氏名</th>
                                         <td class="align-middle" th:text="${employee.name}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>メールアドレス</th>
+                                        <td class="align-middle" th:text="${employee.email}"></td>
                                     </tr>
                                     <tr>
                                         <th>権限</th>
