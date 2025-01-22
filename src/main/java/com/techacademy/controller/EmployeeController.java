@@ -54,11 +54,11 @@ public class EmployeeController {
         this.profileImageService = profileImageService;
     }
 
-    @ModelAttribute("employee")
-    public Employee setUpEmployee() {
-        // セッションに保存するための Employee オブジェクトを初期化
-        return new Employee();
-    }
+//    @ModelAttribute("employee")
+//    public Employee setUpEmployee() {
+//        // セッションに保存するための Employee オブジェクトを初期化
+//        return new Employee();
+//    }
 
     // アップロード先のディレクトリ
     private static final String UPLOAD_DIR = "/Users/ryotaishito/DailyReportSystemApplicationImages";
@@ -87,7 +87,7 @@ public class EmployeeController {
         System.out.println("profileImage : " + profileImageService.getProfileImagePath(employee));
 
         model.addAttribute("profileImage", profileImageService.getProfileImagePath(employee));
-        model.addAttribute("employee", employeeService.findByCode(code));
+        model.addAttribute("employee", employee);
         return "employees/detail";
     }
 
@@ -140,7 +140,7 @@ public class EmployeeController {
             if (!file.isEmpty()) {
                profileImage.setFilePath(File.separator + PROFILE_IMAGES_DIR + File.separator + newFileName);
             } else {
-               profileImage.setFilePath("../../img/profile-noimage.png");
+               profileImage.setFilePath(NOIMAGE_FILE_PATH);
             }
 
             profileImage.setName(dbProfileFileName);
@@ -316,12 +316,12 @@ public class EmployeeController {
                     // フォルダがない場合は作成する
                     if (!profileImageService.isDirectoryExists(UPLOAD_DIR)) {
                         Files.createDirectories(Paths.get(UPLOAD_DIR));
-                    };
+                    }
                     if (!profileImageService.isDirectoryExists(UPLOAD_DIR + File.separator + PROFILE_IMAGES_DIR)) {
                         Files.createDirectories(Paths.get(UPLOAD_DIR + File.separator + PROFILE_IMAGES_DIR));
                     }
 
-                    // ディスクに保存する前に保存する前に同名のファイル削除
+                    // ディスクに保存する前に同名のファイル削除
                     List<Path> paths = employeeService.getFilePaths(UPLOAD_DIR + File.separator + PROFILE_IMAGES_DIR + File.separator);
                     employeeService.deleteFile(paths, profileImage.getName());
                     // 画像ファイルをディスクに保存
@@ -333,7 +333,6 @@ public class EmployeeController {
         } catch (IOException e) {
             return "employees/edit";
         }
-
         return "redirect:/employees";
     }
 }

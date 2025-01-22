@@ -3,7 +3,7 @@
 
 <head th:replace="common/header :: head_fragment(title=日報更新)"></head>
 
-<body class="h-100 overflow-hidden">
+<body class="h-100">
     <div class="row h-100">
         <div class="h-100 p-3 mb-2 bg-dark text-white col-sm-2">
             <nav th:replace="common/side :: copy"></nav>
@@ -19,38 +19,54 @@
                 <div class="col-xl-12">
                     <div class="card">
                         <div class="card-body">
-                            <form th:action="@{/reports/{id}/update(id=${report.id})}" th:object="${report}" th:method="post">
+                            <form th:action="@{/reports/{id}/update(id=${report.id})}" th:object="${report}" th:method="post" enctype="multipart/form-data">>
                                 <div class="wizard wizard-success mb-4">
-                                    <div class="mb-3 pt-2">
-                                      <label for="date">日付</label>
-                                      <p th:if="${reportDateError} neq null" th:text="${reportDateError}" class="text-danger pt-2"></p>
-                                      <p th:errors="*{reportDate}" class="mb-1 pt-1 text-danger"></p>
-                                      <div class="col-md-7">
-                                          <input class="form-control" style="width: 30%;" type="date" id="date" th:field="*{reportDate}" th:errorclass="err">
-                                      </div>
-                                    </div>
-                                    <div class="mb-3 pt-3">
-                                        <label class="form-label" for="report-employee-name">氏名</label>
-                                        <p class="mb-1"></p>
-                                        <div class="col-md-7">
-                                            <div class="" th:text="*{employee.name}" th:value="*{employee.name}" id="report-employee-name">
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 pt-4">
-                                        <label class="form-label" for="title">タイトル</label>
-                                        <p th:errors="*{title}" class="mb-1 text-danger"></p>
-                                        <div class="col-md-7">
-                                            <input class="form-control" style="width: 65%;" type="text" id="title" th:field="*{title}" th:errorclass="err">
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 pt-3">
-                                        <label class="form-label" for="content">内容</label>
-                                        <p th:errors="*{content}" class="mb-1 text-danger"></p>
-                                        <div class="col-md-7" style="width: 60%;">
-                                            <textarea class="form-control" rows="10" style="width: 100%;" id="content" th:field="*{content}"  th:errorclass="err"></textarea>
-                                        </div>
-                                    </div>
+                                    <div style="width: 100%; display: flex; justify-content: space-around;">
+                                        <div style="width: 100%;">
+                                            <div class="mb-3 pt-2">
+                                              <label for="date">日付</label>
+                                              <p th:if="${reportDateError} neq null" th:text="${reportDateError}" class="text-danger pt-2"></p>
+                                              <p th:errors="*{reportDate}" class="mb-1 pt-1 text-danger"></p>
+                                              <div class="col-md-7">
+                                                <input class="form-control" style="width: 200px;" type="date" id="date" th:field="*{reportDate}" th:errorclass="err">
+                                              </div>
+                                            </div>
 
+                                            <div class="mb-3 pt-3">
+                                                <label class="form-label" for="report-employee-name">氏名</label>
+                                                <p class="mb-1"></p>
+                                                <div class="col-md-7">
+                                                    <div class="" th:text="*{employee.name}" th:value="*{employee.name}" id="report-employee-name"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3 pt-4">
+                                                <label class="form-label" for="title">タイトル</label>
+                                                <p th:errors="*{title}" class="mb-1 text-danger"></p>
+                                                <div class="col-md-7">
+                                                    <input class="form-control" style="width: 350px;" type="text" id="title" th:field="*{title}" th:errorclass="err">
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3 pt-3">
+                                                <label class="form-label" for="content">内容</label>
+                                                <p th:errors="*{content}" class="mb-1 text-danger"></p>
+                                                <div class="col-md-7" style="width: 450px;">
+                                                    <textarea class="form-control" rows="10" style="width:450px;" id="content" th:field="*{content}"  th:errorclass="err"></textarea>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div style="margin-left: 20px;">
+                                            <div>ファイル</div>
+                                            <img th:src="${reportFile}" alt="" style="width: 250px; height: 400px; border: 1px solid gray;" id="reportFile">
+                                            <div class="mt-2" style="display: flex; justify-content: center; align-items: center;">
+                                                <input type="file" name="file" style="display: none;" onchange="previewFile(this);" id="reportFileInput" accept="image/*, application/pdf">
+                                                <button type="button" class="" id="uploadBtn">アップロード</button>
+                                                <button type="button" class="" id="deleteBtn" style="margin-left: 15px;">画像を削除</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <p class="mt-5">
                                     <input type="submit" value="更新" class="btn btn-primary">
@@ -64,6 +80,18 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function previewFile(f) {
+            let fileData = new FileReader();
+            fileData.onload = (function() {
+                document.getElementById("reportFile").src = fileData.result;
+            });
+            fileData.readAsDataURL(f.files[0]);
+        }
+    </script>
+
+    <script type="text/javascript" th:src="@{/js/app.js}"></script>
 </body>
 
 </html>

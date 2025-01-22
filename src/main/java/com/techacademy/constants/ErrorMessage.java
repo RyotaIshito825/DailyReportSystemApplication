@@ -41,6 +41,10 @@ public class ErrorMessage {
             put(ErrorKinds.FILESIZE_ERROR, new ArrayList<String>(Arrays.asList("fileError", "ファイルサイズが大きすぎます。最大1MBです。")));
             // プロフィール画像のファイルタイプが"image/*"チェック用エラーメッセージ
             put(ErrorKinds.FILETYPE_ERROR, new ArrayList<String>(Arrays.asList("fileError", "画像ファイルをアップロードしてください。")));
+            // レポートファイル画像のファイルサイズが2MB以下チェック用エラーメッセージ
+            put(ErrorKinds.REPORT_FILESIZE_ERROR, new ArrayList<String>(Arrays.asList("fileError", "ファイルサイズが大きすぎます。最大2MBです")));
+            // レポートファイルのファイルタイプが"image/*"もしくは"application/pdf"チェック用エラーメッセージ
+            put(ErrorKinds.REPORT_FILETYPE_ERROR, new ArrayList<String>(Arrays.asList("fileError", "画像ファイルもしくはpdfファイルをアップロードしてください。")));
         }
     };
 

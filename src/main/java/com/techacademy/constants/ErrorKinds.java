@@ -20,10 +20,14 @@ public enum ErrorKinds {
     LOGINCHECK_ERROR,
     // 日付チェックエラー
     DATECHECK_ERROR,
-    // ファイルサイズエラー
+    // プロフィールファイルサイズエラー
     FILESIZE_ERROR,
-    // ファイルタイプエラー
+    // プロフィールファイルタイプエラー
     FILETYPE_ERROR,
+    // プロフィールファイルサイズエラー
+    REPORT_FILESIZE_ERROR,
+    // プロフィールファイルタイプエラー
+    REPORT_FILETYPE_ERROR,
     // チェックOK
     CHECK_OK,
     // 正常終了

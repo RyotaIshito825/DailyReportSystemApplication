@@ -1,6 +1,11 @@
 package com.techacademy.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,16 +16,25 @@ import org.springframework.transaction.annotation.Transactional;
 import com.techacademy.constants.ErrorKinds;
 import com.techacademy.entity.Employee;
 import com.techacademy.entity.Report;
+import com.techacademy.entity.ReportFile;
 import com.techacademy.repository.ReportRepository;
 
 @Service
 public class ReportService {
 
     private final ReportRepository reportRepository;
+    private final ReportFileService reportFileService;
 
-    public ReportService(ReportRepository reportRepository) {
+    public ReportService(ReportRepository reportRepository, ReportFileService reportFileService) {
         this.reportRepository = reportRepository;
+        this.reportFileService = reportFileService;
     }
+
+    // アップロード先のディレクトリ
+    private static final String UPLOAD_DIR = "/Users/ryotaishito/DailyReportSystemApplicationImages";
+    private static final String LOCAL_HOST = "http://localhost:8080";
+    private static final String REPORTFILES_DIR = "reportFiles";
+    private static final String NOIMAGE_FILE_PATH = "../../img/report-nofile.png";
 
     // 日報一覧表示処理
     public List<Report> findAll() {
@@ -42,21 +56,31 @@ public class ReportService {
     // 日報登録
     @Transactional
     public ErrorKinds save(@AuthenticationPrincipal UserDetail userDetail, Report report) {
+
+        // 日報日付チェック（新規登録時）
         ErrorKinds result = isRegisteredDateCheck(userDetail, report);
         if (ErrorKinds.CHECK_OK != result) {
             return result;
         }
+        return ErrorKinds.SUCCESS;
+    }
 
+    // レポートの登録（後にレポートファイルを保存するために切り分けた）
+    public void saveReport(Report report) {
+        report.setDeleteFlg(false);
         LocalDateTime now = LocalDateTime.now();
+        if (report.getId() != null) {
+            Report rep = findById(report.getId());
+            report.setCreatedAt(rep.getCreatedAt());
+        } else {
+            report.setCreatedAt(now);
+        }
         report.setTitle(report.getTitle());
         report.setContent(report.getContent());
-        report.setDeleteFlg(false);
         report.setReportDate(report.getReportDate());
-        report.setCreatedAt(now);
         report.setUpdatedAt(now);
 
         reportRepository.save(report);
-        return ErrorKinds.SUCCESS;
     }
 
     // 日報更新
@@ -72,15 +96,28 @@ public class ReportService {
         if (ErrorKinds.CHECK_OK != result) {
             return result;
         } else {
-            LocalDateTime now = LocalDateTime.now();
-            report.setTitle(report.getTitle());
-            report.setContent(report.getContent());
-            report.setReportDate(report.getReportDate());
-            report.setCreatedAt(rep.getCreatedAt());
-            report.setUpdatedAt(now);
-            reportRepository.save(report);
+//            LocalDateTime now = LocalDateTime.now();
+//            report.setTitle(report.getTitle());
+//            report.setContent(report.getContent());
+//            report.setReportDate(report.getReportDate());
+//            report.setCreatedAt(rep.getCreatedAt());
+//            report.setUpdatedAt(now);
+//            reportRepository.save(report);
             return ErrorKinds.SUCCESS;
         }
+    }
+    // reportUpdate
+    public void reportUpdate(Report report) {
+        Report rep = findById(report.getId());
+
+        LocalDateTime now = LocalDateTime.now();
+        report.setTitle(report.getTitle());
+        report.setContent(report.getContent());
+        report.setReportDate(report.getReportDate());
+        report.setCreatedAt(rep.getCreatedAt());
+        report.setUpdatedAt(now);
+
+        reportRepository.save(report);
     }
 
     // 日報日付チェック（新規登録時）
@@ -93,7 +130,8 @@ public class ReportService {
     }
     // レポートにログイン中の従業員のものが含まれているかチェック
     public boolean isLoginEmployeeCheck(@AuthenticationPrincipal UserDetail userDetail, List<Report> reports) {
-        boolean isExist = reports.stream().anyMatch(r -> r.getEmployee().getCode().equals(userDetail.getUsername()));
+//        boolean isExist = reports.stream().anyMatch(r -> r.getEmployee().getCode().equals(userDetail.getUsername()));
+        boolean isExist = reports.stream().anyMatch(r -> r.getEmployee().getCode().toString().equals(userDetail.getUsername()));
         return isExist;
     }
 
@@ -132,5 +170,49 @@ public class ReportService {
         report.setDeleteFlg(true);
 
         return ErrorKinds.SUCCESS;
+    }
+    // ファイルの削除
+    public void deleteFile(Integer id) {
+        try {
+            Report report = findById(id);
+            ReportFile reportFile = reportFileService.findByReport(report);
+            if (reportFile != null) {
+                if (reportFileService.isFileExists(UPLOAD_DIR + reportFile.getFilePath())) {
+                    Files.delete(Paths.get(UPLOAD_DIR + reportFile.getFilePath()));
+                    System.out.println("ファイルを削除しました");
+                } else {
+                    System.out.println("ファイルを削除できませんでした");
+                }
+            }
+            System.out.println("reportFile is null");
+        } catch (IOException e) {
+            System.out.println("error");
+        }
+    }
+
+    // 指定ディレクトリ内のファイルをリストで取得
+    public List<Path> getFilePaths(String dirName) {
+        Path directoryPath = Paths.get(dirName);
+        List<Path> paths = new ArrayList<>();
+        try {
+            Files.walk(directoryPath)
+                .filter(Files::isRegularFile)
+                .forEach(paths::add);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return paths;
+    }
+    // リストから指定したファイル名のファイルを削除
+    public void deleteFile(List<Path> paths, String fileName) {
+        try {
+            for (Path path : paths) {
+                if (path.toString().contains(fileName)) {
+                    Files.delete(path);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

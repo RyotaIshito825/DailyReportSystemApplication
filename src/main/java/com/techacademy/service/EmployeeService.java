@@ -144,15 +144,6 @@ public class EmployeeService {
             reportService.delete(r.getId());
         }
 
-//        try {
-//            ProfileImage profileImage = profileImageService.findByCode(employee);
-//            if (profileImageService.isFileExists(UPLOAD_DIR + File.separator + PROFILE_IMAGES_DIR + File.separator + profileImage)) {
-//                Files.delete(Paths.get(UPLOAD_DIR + File.separator + PROFILE_IMAGES_DIR + File.separator + profileImage));
-//            }
-//        } catch (IOException e) {
-//            return ErrorKinds.FILETYPE_ERROR;
-//        }
-
         return ErrorKinds.SUCCESS;
     }
 

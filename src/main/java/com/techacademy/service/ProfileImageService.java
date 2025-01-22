@@ -41,7 +41,6 @@ public class ProfileImageService {
         if (profileImage.getFileSize() > MAX_FILE_SIZE) {
             return ErrorKinds.FILESIZE_ERROR;
         }
-
         // ファイルタイプチェック
         String contentType = profileImage.getFileType();
         if (!profileImage.getFilePath().equals(NOIMAGE_FILE_PATH)) {
@@ -60,6 +59,7 @@ public class ProfileImageService {
         profileImageRepository.save(profileImage);
     }
 
+    // プロフィール画像のアップデート
     @Transactional
     public ErrorKinds updateProfileImage(ProfileImage profileImage) {
         // ファイルサイズチェック
@@ -76,7 +76,7 @@ public class ProfileImageService {
         }
         return ErrorKinds.SUCCESS;
     }
-
+    // プロフィール画像のアップデート （先に従業員を保存するために切り分け)
     public void profileImageUpdate(ProfileImage profileImage) {
         LocalDateTime now = LocalDateTime.now();
         profileImage.setCreatedAt(profileImage.getCreatedAt());
@@ -96,14 +96,13 @@ public class ProfileImageService {
         ProfileImage profileImage = findByCode(employee);
         if (profileImage != null) {
             String filePath = profileImage.getFilePath();
-            if (filePath.equals("../../img/profile-noimage.png")) {
+            if (filePath.equals(NOIMAGE_FILE_PATH)) {
                 return NOIMAGE_FILE_PATH;
             }
         } else {
             return NOIMAGE_FILE_PATH;
         }
         return LOCAL_HOST + profileImage.getFilePath();
-
     }
     // ファイルの拡張子を返す
     public String getFileExtension(String fileName) {
@@ -122,7 +121,7 @@ public class ProfileImageService {
             if (profileImage != null) {
                 String filePath = LOCAL_HOST + profileImage.getFilePath();
                 // 画像パスが既定の「noimage」の場合はそのまま使う
-                if (profileImage.getFilePath().equals("../../img/profile-noimage.png")) {
+                if (profileImage.getFilePath().equals(NOIMAGE_FILE_PATH)) {
                     filePath = profileImage.getFilePath();
                 }
                 profileImageMap.put(employee.getCode(), filePath);

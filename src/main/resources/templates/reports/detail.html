@@ -20,36 +20,43 @@
                     <div class="card" th:object="${report}">
                         <div class="card-body mb-5">
 
-                            <div class="wizard wizard-success mb-4">
+                            <div class="wizard wizard-success mb-4" >
+                                <div style="display: flex; justify-content: space-around;">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th class="w-25">日付</th>
+                                            <td class="align-middle" th:text="*{reportDate}"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>氏名</th>
+                                            <td class="align-middle" th:text="*{employee.name}"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>タイトル</th>
+                                            <td class="align-middle" th:text="*{title}"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>内容</th>
+                                            <td class="align-middle">
+                                                <pre th:text="*{content}" style="font-family: inherit; font-size: inherit; margin: inherit;"></pre>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>登録日時</th>
+                                            <td class="align-middle" th:text="*{#temporals.format(createdAt, 'yyyy-MM-dd hh:mm:ss')}"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>更新日時</th>
+                                            <td class="align-middle" th:text="*{#temporals.format(updatedAt, 'yyyy-MM-dd hh:mm:ss')}"></td>
+                                        </tr>
+                                    </table>
 
-                                <table class="table table-striped">
-                                    <tr>
-                                        <th class="w-25">日付</th>
-                                        <td class="align-middle" th:text="*{reportDate}"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>氏名</th>
-                                        <td class="align-middle" th:text="*{employee.name}"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>タイトル</th>
-                                        <td class="align-middle" th:text="*{title}"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>内容</th>
-                                        <td class="align-middle">
-                                            <pre th:text="*{content}" style="font-family: inherit; font-size: inherit; margin: inherit;"></pre>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>登録日時</th>
-                                        <td class="align-middle" th:text="*{#temporals.format(createdAt, 'yyyy-MM-dd hh:mm:ss')}"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>更新日時</th>
-                                        <td class="align-middle" th:text="*{#temporals.format(updatedAt, 'yyyy-MM-dd hh:mm:ss')}"></td>
-                                    </tr>
-                                </table>
+                                    <div style="margin-left: 20px;">
+                                        <div>ファイル</div>
+                                        <img th:if="${reportFile} != null" th:src="${reportFile}" style="width: 250px; height: 400px; border: 1px solid gray;">
+                                    </div>
+                                </div>
+
                                 <div class="mt-5 row g-1">
                                     <div class="col-auto">
                                         <form name="form" th:action="@{/reports/{id}/update(id=${report.id})}" method="get">
