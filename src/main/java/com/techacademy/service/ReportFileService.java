@@ -1,5 +1,6 @@
 package com.techacademy.service;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,7 +25,7 @@ public class ReportFileService {
     // アップロード先のディレクトリ
     private static final String UPLOAD_DIR = "/Users/ryotaishito/DailyReportSystemApplicationImages";
     private static final String LOCAL_HOST = "http://localhost:8080";
-    private static final String PROFILE_IMAGES_DIR = "reportFiles";
+    private static final String REPORTFILES_DIR = "reportFiles";
     private static final String NOIMAGE_FILE_PATH = "../../img/report-nofile.png";
 
     public ReportFileService(ReportFileRepository reportFileRepository) {
@@ -122,6 +123,9 @@ public class ReportFileService {
                 // 画像パスが規定の「nofile」の場合はそのまま使う
                 if (reportFile.getFilePath().equals(NOIMAGE_FILE_PATH)) {
                     filePath = reportFile.getFilePath();
+                // ファイルが存在しない場合は、共通ファイルのパスを保存
+                } else if (!isFileExists(UPLOAD_DIR + File.separator + REPORTFILES_DIR + File.separator + reportFile.getName() + getFileExtension(reportFile.getFilePath()))) {
+                    filePath = NOIMAGE_FILE_PATH;
                 }
                reportFileMap.put(report.getId(), filePath);
             }

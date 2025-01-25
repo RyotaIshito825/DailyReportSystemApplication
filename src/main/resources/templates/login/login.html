@@ -12,23 +12,51 @@
                         <div class="d-table-cell align-middle">
 
                             <div class="text-center mt-4">
-                                <h1 class="h2">ようこそ</h1>
+                                <h1 class="h2">ログイン</h1>
                             </div>
 
-                            <form th:action="@{/login}" th:method="post">
-                                <div class="mb-3">
-                                    <label class="form-label" for="username">社員番号</label> <input class="form-control form-control-lg" id="username" name="username">
+                            <div class="" style="position: relative; width: 100%; border-radius: 5px; border: 1px solid rgb(212, 212, 212); padding: 30px;">
+                                <div class="" style="border-bottom: 1px solid rgb(212, 212, 212);">
+                                    <div style="width: 150px; margin: 0 auto; display: flex; justify-content: space-between;">
+                                        <div>
+                                            <a href="" style="position: relative; display: inline-block; width: 50px; height: 50px; border-radius: 100px; border: 0.5px solid rgb(212, 212, 212)">
+                                                <img th:src="@{../../img/google-icon.png}" alt="" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 30px; height: 30px;">
+                                            </a>
+                                            <p style="text-align: center;">Google</p>
+                                        </div>
+                                        <div>
+                                            <a href="" style="position: relative; display: inline-block; width: 50px; height: 50px; border-radius: 100px; border: 0.5px solid rgb(212, 212, 212)">
+                                                <img th:src="@{../../img/line-icon.png}" alt="" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 30px; height: 30px;">
+                                            </a>
+                                            <p style="text-align: center;">LINE</pstyle="text-align: center;">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="password">パスワード</label> <input class="form-control form-control-lg" type="password" id="password" name="password">
-                                </div>
-                                <span class="text-danger" th:if="${param.error}">社員番号またはパスワードが正しくありません</span>
-                                <p class="mb-5"></p>
-                                <div class="text-center">
-                                    <input type="submit" name="loginRun" value="ログイン" class="btn btn-lg btn-primary">
-                                </div>
-                            </form>
 
+                                <form th:action="@{/login}" th:method="post">
+                                    <!-- <div class="mb-3">
+                                        <label class="form-label" for="username">社員番号</label> <input class="form-control form-control-lg" id="username" name="username">
+                                    </div> -->
+                                    <div class="mb-3 mt-5">
+                                        <label class="form-label" for="email" style="font-weight: bold;">メールアドレス</label> <input class="form-control form-control-lg" type="email" id="email" name="email" placeholder="mail@example.com">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="password" style="font-weight: bold;">パスワード</label> <input class="form-control form-control-lg" type="password" id="password" name="password">
+                                    </div>
+                                    <span class="text-danger" th:if="${param.error}">メールアドレスまたはパスワードが正しくありません</span>
+                                    <p class="mb-5"></p>
+                                    <p class="" style="text-align: center; margin: 20px 0 30px 0;">
+                                        <a th:href="@{/password_reset}" style="font-size: 12px; color: gray;">パスワードを忘れた方</a>
+                                    </p>
+                                    <div class="text-center" style="border-bottom: 1px solid rgb(212, 212, 212); padding-bottom: 20px;">
+                                        <input type="submit" name="loginRun" value="ログイン" class="" style="width: 100%; padding: 10px; border: none; border-radius: 5px;">
+                                    </div>
+                                </form>
+                                <p class="" style="text-align: center; margin: 30px 0 0 0;" >
+                                    <a href="/" style="font-size: 14px; color: gray;">新規登録はこちら</a>
+                                </p>
+
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -79,6 +79,12 @@ public class EmployeeController {
         return "employees/list";
     }
 
+    // パスワード再設定画面表示
+//    @GetMapping(value = "/password_reset")
+//    public String passwordreset() {
+//        return "login/passwordreset";
+//    }
+
     // 従業員詳細画面
     @GetMapping(value = "/{code}/")
     public String detail(@PathVariable Integer code, Model model) {

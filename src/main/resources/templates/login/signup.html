@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/header :: head_fragment(title=ログイン)"></head>
+
+<body>
+    <div class="main justify-content-center w-100">
+        <main class="content p-0">
+            <div class="container flex-column">
+                <div class="row h-100">
+                    <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+                        <div class="d-table-cell align-middle">
+
+                            <div class="mt-4 mb-3">
+                                <h1 class="h2" style="font-size: 22px; font-weight: bold;">新規登録</h1>
+                            </div>
+
+                            <div class="" style="border-radius: 5px; border: 1px solid rgb(212, 212, 212); padding: 30px;">
+                                <div class="text-center" style="padding: 10px;">
+                                    <a href="" style="display: flex; justify-content: center; border-bottom: 1px solid rgb(212, 212, 212); background-color: rgb(0, 143, 81); border-radius: 5px; color: white; text-decoration: none; align-items: center;">
+                                        <img th:src="@{../../img/email-icon.png}" alt="" style="width: 30px; height: 30px;">
+                                        <div style="margin-left: 20px; line-height: 50px;">メールで登録</div>
+                                    </a>
+                                </div>
+                                <div class="text-center" style="padding: 10px;">
+                                    <a href="" style="display: flex; justify-content: center; border: 1px solid rgb(212, 212, 212); background-color: white; border-radius: 5px; color: black; text-decoration: none; align-items: center;">
+                                        <img th:src="@{../../img/google-icon.png}" alt="" style="width: 30px; height: 30px;">
+                                        <div style="margin-left: 20px; line-height: 50px;">Googleで登録</div>
+                                    </a>
+                                </div>
+                                <div class="text-center" style="padding: 10px;">
+                                    <a href="" style="display: flex; justify-content: center; border: 1px solid rgb(212, 212, 212); background-color: white; border-radius: 5px; color: black; text-decoration: none; align-items: center;">
+                                        <img th:src="@{../../img/line-icon.png}" alt="" style="width: 30px; height: 30px;">
+                                        <div style="margin-left: 20px; line-height: 50px;">LINEで登録</div>
+                                    </a>
+                                </div>
+
+                            </div>
+                            <p class="" style="text-align: center; margin: 30px 0 0 0; border-top: 1px solid rgb(212, 212, 212); padding-top: 20px;" >
+                                <a th:href="@{/login}" style="font-size: 14px; color: gray; padding-top: 30px;">ログインはこちら</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+
+</html>

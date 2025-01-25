@@ -96,12 +96,9 @@ public class ReportController {
 
         try {
             ErrorKinds result = reportService.save(userDetail, report);
-            System.out.println("result : " + result);
-            System.out.println("userDetail.getUsername() : " + userDetail.getUsername());
 
             if (ErrorMessage.contains(result)) {
                 model.addAttribute(ErrorMessage.getErrorName(result), ErrorMessage.getErrorValue(result));
-//                return create(userDetail, report, model);
                 return "reports/new";
             }
 
@@ -126,7 +123,6 @@ public class ReportController {
             reportFile.setFileType(file.getContentType());
 
             ErrorKinds reportFileresult = reportFileService.save(reportFile, report);
-            System.out.println("reportFileresult : " + reportFileresult);
 
             System.out.println("エラーあり");
             if (ErrorMessage.contains(reportFileresult)) {
@@ -137,9 +133,7 @@ public class ReportController {
 
             if (result == ErrorKinds.SUCCESS && reportFileresult == ErrorKinds.SUCCESS) {
 
-                System.out.println("reportService.saveReport before");
                 reportService.saveReport(report);
-                System.out.println("reportService.saveReport after");
 
                 reportFile.setReport(report);
                 dbReportFileName = "report-file_" + report.getId();
@@ -195,6 +189,14 @@ public class ReportController {
         Report report = reportService.findById(id);
         model.addAttribute("report", report);
         model.addAttribute("reportFile", reportFileService.getReportFilePath(report));
+
+        ReportFile reportFile = reportFileService.findByReport(report);
+        if (reportFile != null) {
+            String filePath = UPLOAD_DIR + File.separator + REPORTFILES_DIR + File.separator + reportFile.getName() + reportFileService.getFileExtension(reportFile.getFilePath());
+            if (!reportFileService.isFileExists(filePath)) {
+                model.addAttribute("reportFile", NOIMAGE_FILE_PATH);
+            }
+        }
         return "reports/detail";
     }
 
@@ -205,7 +207,21 @@ public class ReportController {
         Employee employee = employeeService.findByCode(reportService.findById(id).getEmployee().getCode());
         Report report = reportService.findById(id);
         report.setEmployee(employee);
-        model.addAttribute("reportFile", reportFileService.getReportFilePath(report));
+        String reportFilePath = reportFileService.getReportFilePath(report);
+        if (reportFilePath.isEmpty()) {
+            model.addAttribute("reportFile", NOIMAGE_FILE_PATH);
+        } else {
+            model.addAttribute("reportFile", reportFileService.getReportFilePath(report));
+        }
+
+        ReportFile reportFile = reportFileService.findByReport(report);
+        if (reportFile != null) {
+            String filePath = UPLOAD_DIR + File.separator + REPORTFILES_DIR + File.separator + reportFile.getName() + reportFileService.getFileExtension(reportFile.getFilePath());
+            if (!reportFileService.isFileExists(filePath)) {
+                model.addAttribute("reportFile", NOIMAGE_FILE_PATH);
+            }
+        }
+
         model.addAttribute("report", reportService.findById(id));
         return "reports/edit";
     }
@@ -215,8 +231,10 @@ public class ReportController {
     public String update(@Validated Report report, BindingResult res, MultipartFile file, Model model) {
         Employee employee = employeeService.findByCode(reportService.findById(report.getId()).getEmployee().getCode());
         report.setEmployee(employee);
+
         if (res.hasErrors()) {
             model.addAttribute("report", report);
+            model.addAttribute("reportFile", NOIMAGE_FILE_PATH);
             return "reports/edit";
         }
 
@@ -224,6 +242,7 @@ public class ReportController {
 
         if (ErrorMessage.contains(result)) {
             model.addAttribute(ErrorMessage.getErrorName(result), ErrorMessage.getErrorValue(result));
+            System.out.println("error2");
             return "reports/edit";
         }
 

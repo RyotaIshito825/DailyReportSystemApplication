@@ -38,9 +38,13 @@ public class UserDetail implements UserDetails {
         return employee.getPassword();
     }
 
+//    @Override
+//    public String getUsername() {
+//        return String.valueOf(employee.getCode());
+//    }
     @Override
     public String getUsername() {
-        return String.valueOf(employee.getCode());
+        return String.valueOf(employee.getEmail());
     }
 
     @Override

@@ -18,12 +18,21 @@ public class UserDetailService implements UserDetailsService {
         this.employeeRepository = repository;
     }
 
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        Optional<Employee> employee = employeeRepository.findById(Integer.parseInt(username));
+//
+//        if (employee.isEmpty()) {
+//            throw new UsernameNotFoundException("Exception:Username Not Found");
+//        }
+//        return new UserDetail(employee.get());
+//    }
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Employee> employee = employeeRepository.findById(Integer.parseInt(username));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
+        Optional<Employee> employee = employeeRepository.findByEmail(email);
         if (employee.isEmpty()) {
-            throw new UsernameNotFoundException("Exception:Username Not Found");
+            throw new UsernameNotFoundException("Exception:Email Not Found");
         }
         return new UserDetail(employee.get());
     }

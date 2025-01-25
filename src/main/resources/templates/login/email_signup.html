@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/header :: head_fragment(title=ログイン)"></head>
+
+<body>
+    <div class="main justify-content-center w-100">
+        <main class="content p-0">
+            <div class="container flex-column">
+                <div class="row h-100">
+                    <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+                        <div class="d-table-cell align-middle">
+
+                            <div class="mt-4 mb-3">
+                                <h1 class="h2" style="font-size: 22px; font-weight: bold;">メールで新規登録</h1>
+                            </div>
+
+                            <div class="" style="position: relative; width: 100%; border-radius: 5px; border: 1px solid rgb(212, 212, 212); padding: 30px;">
+                                <form th:action="@{/login}" th:method="post">
+                                    <div class="mb-4 mt-2">
+                                        <label class="form-label" for="email" style="font-weight: bold;">メールアドレス<span style="color: red; margin-left: 15px;">必須</span></label>
+                                        <input class="form-control form-control-lg" type="email" id="email" name="email" placeholder="mail@example.com" style="font-size: 1rem;">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="password" style="font-weight: bold;">パスワード<span style="color: red; margin-left: 15px;">必須</span></label>
+                                        <input class="form-control form-control-lg" type="password" id="password" name="password" style="font-size: 1rem;">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label" for="name" style="font-weight: bold;">氏名<span style="color: red; margin-left: 15px;">必須</span></label>
+                                        <input class="form-control form-control-lg" type="text" id="name" name="name" placeholder="山田 太郎" style="font-size: 1rem;">
+                                    </div>
+                                    <div class="text-center" style="border-bottom: 1px solid rgb(212, 212, 212); padding-bottom: 20px;">
+                                        <input type="submit" name="loginRun" value="同意して登録する" class="" style="width: 100%; padding: 10px; border: none; border-radius: 5px;">
+                                    </div>
+                                </form>
+                                <p class="" style="text-align: center; margin: 30px 0 0 0;" >
+                                    <a th:href="@{/login}" style="font-size: 14px; color: gray;">ログインはこちら</a>
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+
+</html>
