@@ -1,0 +1,37 @@
+spring:
+  jpa:
+    show-sql: true
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create
+  datasource:
+    url: jdbc:mysql://localhost/daily_report_system?useSSL=false&allowPublicKeyRetrieval=true
+    username: repuser
+    password: reppass
+#    url: jdbc: mysql://db_container/daily_report_system?useSSL=false&allowPublicKeyRetrieval=true
+#    username: repuser
+#    password: reppass
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
+    
+  web:
+    resources:
+      static-locations: classpath:/static/, file:/Users/ryotaishito/DailyReportSystemApplicationImages/
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: udonishito0506@gmail.com
+    password: sfqi wudz ifvg nrrl
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+          

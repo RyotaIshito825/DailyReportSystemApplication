@@ -77,7 +77,8 @@ public class ReportController {
     //日報新規登録画面
     @GetMapping(value = "/add")
     public String create(@AuthenticationPrincipal UserDetail userDetail, @ModelAttribute Report report, Model model) {
-        Employee employee = employeeService.findByCode(Integer.parseInt(userDetail.getUsername()));
+//        Employee employee = employeeService.findByCode(Integer.parseInt(userDetail.getUsername()));
+        Employee employee = employeeService.findByEmail(userDetail.getUsername());
         report.setEmployee(employee);
         model.addAttribute("report", report);
         return "reports/new";
@@ -86,7 +87,8 @@ public class ReportController {
     // 日報新規登録処理
     @PostMapping(value = "/add")
     public String add(@AuthenticationPrincipal UserDetail userDetail, @Validated Report report, BindingResult res, MultipartFile file, Model model) {
-        Employee employee = employeeService.findByCode(Integer.parseInt(userDetail.getUsername()));
+//        Employee employee = employeeService.findByCode(Integer.parseInt(userDetail.getUsername()));
+        Employee employee = employeeService.findByEmail(userDetail.getUsername());
         report.setEmployee(employee);
 
         if (res.hasErrors()) {
@@ -96,6 +98,7 @@ public class ReportController {
 
         try {
             ErrorKinds result = reportService.save(userDetail, report);
+            System.out.println("result : " + result);
 
             if (ErrorMessage.contains(result)) {
                 model.addAttribute(ErrorMessage.getErrorName(result), ErrorMessage.getErrorValue(result));
@@ -124,12 +127,10 @@ public class ReportController {
 
             ErrorKinds reportFileresult = reportFileService.save(reportFile, report);
 
-            System.out.println("エラーあり");
             if (ErrorMessage.contains(reportFileresult)) {
                 model.addAttribute(ErrorMessage.getErrorName(reportFileresult), ErrorMessage.getErrorValue(reportFileresult));
                 return create(userDetail, report, model);
              }
-            System.out.println("エラーなし");
 
             if (result == ErrorKinds.SUCCESS && reportFileresult == ErrorKinds.SUCCESS) {
 
@@ -149,9 +150,7 @@ public class ReportController {
                     reportFile.setFilePath(NOIMAGE_FILE_PATH);
                 }
 
-                System.out.println("reportFileService.saveReportFile(reportFile, report) before");
                 reportFileService.saveReportFile(reportFile, report);
-                System.out.println("reportFileService.saveReportFile(reportFile, report) after");
 
                 // 最後にファイルを保存する
                 if (!file.isEmpty()) {
@@ -242,7 +241,7 @@ public class ReportController {
 
         if (ErrorMessage.contains(result)) {
             model.addAttribute(ErrorMessage.getErrorName(result), ErrorMessage.getErrorValue(result));
-            System.out.println("error2");
+            model.addAttribute("reportFile", NOIMAGE_FILE_PATH);
             return "reports/edit";
         }
 

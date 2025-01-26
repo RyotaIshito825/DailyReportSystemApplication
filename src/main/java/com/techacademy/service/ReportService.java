@@ -131,7 +131,7 @@ public class ReportService {
     // レポートにログイン中の従業員のものが含まれているかチェック
     public boolean isLoginEmployeeCheck(@AuthenticationPrincipal UserDetail userDetail, List<Report> reports) {
 //        boolean isExist = reports.stream().anyMatch(r -> r.getEmployee().getCode().equals(userDetail.getUsername()));
-        boolean isExist = reports.stream().anyMatch(r -> r.getEmployee().getCode().toString().equals(userDetail.getUsername()));
+        boolean isExist = reports.stream().anyMatch(r -> r.getEmployee().getEmail().equals(userDetail.getUsername()));
         return isExist;
     }
 
@@ -157,7 +157,7 @@ public class ReportService {
     }
     // レポートに画面で表示中の従業員のものが含まれているかチェック
     public boolean isDisplayingEmployeeCheck(Employee employee, List<Report> reports) {
-        boolean isExist = reports.stream().anyMatch(r -> r.getEmployee().getCode().equals(employee.getCode()));
+        boolean isExist = reports.stream().anyMatch(r -> r.getEmployee().getEmail().equals(employee.getEmail()));
         return isExist;
     }
 
